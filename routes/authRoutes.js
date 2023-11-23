@@ -23,7 +23,7 @@ const {deleteAccount} = require('../controllers/UserAccount')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: 'https://true-learn-project.vercel.app',
+    origin: 'https://truelearn.onrender.com',
     credentials: true, // This is important.
   }
 
