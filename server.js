@@ -38,7 +38,8 @@ app.use('/stripe', stripe)
 
 app.post('/upload', (req, res) => {
     const {introduction} = req.body; 
-    console.log('filePath: ', req.file.path)
+    console.log('filePath: ', req.file.originalname)
+    console.log('file:', req.file)
     UploadVideo.create({
         introduction: introduction, 
         videofilename: req.file.originalname
@@ -48,6 +49,7 @@ app.post('/upload', (req, res) => {
 
 app.post('/uploadsectiondata', (req, res) => {
     console.log('fileName:',req.file.originalname)
+    console.log('file: ', req.file)
     const {inputValue} = req.body;
     SectionInput.create({
        section:inputValue, 
