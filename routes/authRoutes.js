@@ -23,7 +23,7 @@ const {deleteAccount} = require('../controllers/UserAccount')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: ['https://truelearn.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net'],
+    origin: ['https://truelearn-api.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/'],
     credentials: true, // This is important.
   }
 

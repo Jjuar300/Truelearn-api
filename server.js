@@ -14,7 +14,7 @@ const UploadVideo = require('./model/CreateCourse/UploadVideoModel')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: ['https://truelearn.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net'],
+    origin: ['https://truelearn-api.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/'],
     credentials: true, // This is important.
   }
 
@@ -33,7 +33,6 @@ app.post('/upload', (req, res) => {
     const {introduction} = req.body; 
     console.log('filePath: ', req.file.path)
     UploadVideo.create({
-    
         introduction: introduction, 
         videofilename: req.file.originalname
     })
@@ -42,12 +41,12 @@ app.post('/upload', (req, res) => {
 
 app.post('/uploadsectiondata', (req, res) => {
     console.log('fileName:',req.file.originalname)
-    const {inputValue} = req.body ;
+    const {inputValue} = req.body;
     SectionInput.create({
-        section:inputValue, 
+       section:inputValue, 
        sectionVideoFile: req.file.originalname, 
      })
-})
+});
 
 app.post('/uploadvideo', (req, res) => { 
     uploadToAwsS3(req.file) 
