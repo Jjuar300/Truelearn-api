@@ -38,8 +38,9 @@ app.use('/stripe', stripe)
 
 app.post('/upload', (req, res) => {
     const {introduction} = req.body; 
-    console.log('filePath: ', req.file.originalname)
-    console.log('file:', req.file)
+    console.log(introduction)
+    // console.log('filePath: ', req.file.originalname)
+    // console.log('file:', req.file)
     UploadVideo.create({
         introduction: introduction, 
         videofilename: req.file.originalname
