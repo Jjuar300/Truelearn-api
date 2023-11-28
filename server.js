@@ -14,7 +14,7 @@ const UploadVideo = require('./model/CreateCourse/UploadVideoModel')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: ['https://truelearn-api.vercel.app', 'https://d3n6kitjvdjlm1.cloudfront.net/'],
+    origin: ['https://truelearn-api.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/'],
     credentials: true, // This is important.
   }
 
