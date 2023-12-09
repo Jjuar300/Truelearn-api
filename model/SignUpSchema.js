@@ -13,7 +13,7 @@ const UserSignUp = new mongoose.Schema({
     type: String, 
     required: true, 
     max: 50, 
-    unique: true,
+    unique: false,
     }, 
     
     password: {
@@ -22,10 +22,7 @@ const UserSignUp = new mongoose.Schema({
         min:5, 
     }, 
     
-    picturepath:{
-        type:String, 
-        default:'', 
-    },
+    picturepath:String, 
 
 },
 {timestamps: true}

@@ -20,10 +20,11 @@ const {
     getUserProfileFullName, 
 } = require('../controllers/UserEdit')
 const {deleteAccount} = require('../controllers/UserAccount')
+const {getUser} = require('../controllers/user')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: ['https://truelearn-api.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/'],
+    origin: 'http://localhost:3000',
     credentials: true, // This is important.
   }
 
@@ -35,6 +36,8 @@ router.get('/', test)
 router.post('/usersignup', UserSignUp)
 router.post('/usersignin', UserSignIn)
 router.get('/authorization', getAuthorize)
+router.get('/usersignin', UserSignIn)
+router.get('/usersignup', UserSignUp)
 
 //CreateCourse section 
 // router.post('/uploadvideocontent', getInfoForUploadVideo)
@@ -55,5 +58,8 @@ router.get('/userData', getUserProfileFullName)
 
 //Delete user account
 router.post('/deleteacount', deleteAccount)
+
+//user
+router.get('/user', getUser)
 
 module.exports = router; 

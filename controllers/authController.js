@@ -12,7 +12,10 @@ const UserSignUp = async (req, res) => {
             firstname, 
             email, 
             password, 
+            picturePath, 
         } = req.body
+   
+        console.log(picturePath)
 
         if(!firstname){
             return res.json({
@@ -40,6 +43,7 @@ const UserSignUp = async (req, res) => {
             firstname, 
             email, 
             password: hashedPassword,
+            picturepath:picturePath, 
         })
  
         res.json(NewUser)
@@ -48,7 +52,6 @@ const UserSignUp = async (req, res) => {
         console.log(err);
     }
 }
-
 
 const UserSignIn = async (req, res) => {
 try{
@@ -62,7 +65,7 @@ if(!user){
 
 const Match = await comparePassword(password, user.password)
 if(Match){
-   jwt.sign({id:user._id}, process.env.JWT_SECRET, {}, (err, token) => {
+   jwt.sign({id:user._id}, process.env.JWT_SECRET, {expiresIn: '1h'}, (err, token) => {
     if(err) throw err; 
     res.cookie('token', token).json(user)
    })
@@ -77,6 +80,7 @@ if(!Match){
 }catch(err){
 console.log(err)
 }
+
 }
 
 

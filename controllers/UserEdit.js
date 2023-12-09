@@ -4,29 +4,26 @@ const {hashPassword} = require('../helper/auth')
 const updateUserProfileName = async (req, res) => {
    try{
       const {
+         userId,
          newEmail, 
          newPassword,
          newFullName, 
       } = req.body
       const hashedPassword = await hashPassword(newPassword)
     
-      const user = await User.findOne({})
-      
-      console.log(user.password)
+       await User.findByIdAndUpdate(userId,{
+         firstname: newFullName, 
+         email: newEmail, 
+      })
 
       console.log(newFullName)
       console.log(newEmail)
       console.log(newPassword)
-      
-      await User.updateMany({
-         firstname: newFullName, 
-         email: newEmail, 
-      })
-      
+
        if(newPassword === ''){
            return res.json({message: 'password was not updated'})
       }else{
-         await User.updateMany({
+         await User.findByIdAndUpdate(userId,{
             password: hashedPassword,
          })
          return res.json({message: 'password was updated'})
