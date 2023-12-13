@@ -11,8 +11,8 @@ const UserSignUp = async (req, res) => {
         const {
             firstname, 
             email, 
-            password, 
-            picturePath, 
+            password,
+            picturePath,  
         } = req.body
    
         console.log(picturePath)
@@ -43,10 +43,12 @@ const UserSignUp = async (req, res) => {
             firstname, 
             email, 
             password: hashedPassword,
-            picturepath:picturePath, 
+            picturepath: picturePath, 
         })
  
+        NewUser.save(); 
         res.json(NewUser)
+        
 
     }catch(err){
         console.log(err);

@@ -31,8 +31,10 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "react-dropzone": "^14.2.3",
+    "socket.io": "^4.7.2",
     "stripe": "^13.9.0",
     "uuid": "^9.0.1",
+    "ws": "^8.15.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
