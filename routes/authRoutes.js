@@ -37,7 +37,6 @@ router.post('/usersignup', UserSignUp)
 router.post('/usersignin', UserSignIn)
 router.get('/authorization', getAuthorize)
 router.get('/usersignin', UserSignIn)
-router.get('/userpicture', upload.single('file'), UserSignUp)
 
 //CreateCourse section 
 // router.post('/uploadvideocontent', getInfoForUploadVideo)

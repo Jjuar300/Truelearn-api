@@ -15,7 +15,7 @@ const UserSignUp = async (req, res) => {
             picturePath,  
         } = req.body
    
-        console.log(picturePath)
+        console.log('picturePath: ', picturePath)
 
         if(!firstname){
             return res.json({

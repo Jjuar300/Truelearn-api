@@ -67,12 +67,6 @@ app.post('/upload', async (req, res) => {
 //    }
 // });
 
-// app.post('/userpicture',upload.single('file'), async (req, res) => {
-//     console.log('userImage: ', req.file.originalname)
-//     await User.create({
-//         picturepath: req.file.originalname, 
-//     })
-// })
 
 app.put('/userfile',upload.single('file'),  async (req, res) => {
     const {userId} = req.body; 
