@@ -19,7 +19,7 @@ const CourseLandingPageSchema = new mongoose.Schema({
    }, 
   
    filename: String, 
-
+   userId: mongoose.Types.ObjectId
 })
 
 const CourseLandingPage = mongoose.model('CourseLandingPage', CourseLandingPageSchema)

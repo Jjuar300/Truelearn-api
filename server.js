@@ -14,11 +14,21 @@ const UploadVideo = require('./model/CreateCourse/UploadVideoModel')
 const User = require('./model/SignUpSchema')
 const cors = require('cors')
 const morgan = require('morgan')
+const http = require('http')
+const {Server} = require('socket.io')
+const PORT = process.env.PORT || 3005; 
 
 const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true, // This is important.
 }
+
+const httpServer = http.createServer(app)
+const io = new Server(httpServer, corsOptions)
+
+httpServer.listen(PORT, () => {
+    console.log('SERVER RUNNING IN PORT', PORT)
+})
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://truelearn.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/',  "http://localhost:3000",);
@@ -32,7 +42,6 @@ app.use(cors('*'))
 app.use(express.json())
 app.use(cookieParser()); 
 app.use(express.urlencoded({extended: false}));
-const PORT = process.env.PORT || 3005; 
 app.use(express.json({limit: '60mb'}))
 app.use(express.urlencoded({extended: true, limit: '60mb'}))
 app.use(morgan('common'))
@@ -77,13 +86,9 @@ app.put('/userfile',upload.single('file'),  async (req, res) => {
     console.log('userId:', userId)
 })
 
-console.log('hello from server')
-
  mongoose.connect(process.env.MONGO_DATABASE, {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
 }).then(() => {
-    app.listen(PORT, () => console.log(`server Port: ${PORT}`))
+    // app.listen(PORT, () => console.log(`server Port: ${PORT}`))
 }).catch(err => console.log(`${err} did not connect`))
-
-

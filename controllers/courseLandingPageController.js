@@ -12,6 +12,7 @@ const getCourseLandingPageInputValues = async (req, res) => {
             price, 
             catergory, 
             fileName, 
+            userId, 
         } = req.body; 
 
         const newCourseLandingPage = await CourseLandingPage.create({
@@ -20,6 +21,7 @@ const getCourseLandingPageInputValues = async (req, res) => {
             price: price, 
             catergory: catergory,
             filename: fileName, 
+            userId: userId, 
         })
 
         newCourseLandingPage.save();  

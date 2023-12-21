@@ -23,6 +23,7 @@
     "express-openid-connect": "^2.16.0",
     "express-session": "^1.17.3",
     "helmet": "^7.0.0",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
