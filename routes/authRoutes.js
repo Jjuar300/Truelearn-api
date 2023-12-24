@@ -20,6 +20,7 @@ const {
     getUserProfileFullName, 
 } = require('../controllers/UserEdit')
 const {deleteAccount} = require('../controllers/UserAccount')
+const {deleteCourse} = require('../controllers/userCourseCard')
 const {getUser} = require('../controllers/user')
 const cors = require('cors')
 
@@ -60,5 +61,8 @@ router.post('/deleteacount', deleteAccount)
 
 //user
 router.get('/user', getUser)
+
+//delete user course
+router.post('/deletecoursecard', deleteCourse)
 
 module.exports = router; 
