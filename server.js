@@ -15,12 +15,13 @@ const User = require('./model/SignUpSchema')
 const cors = require('cors')
 const morgan = require('morgan')
 const http = require('http')
-const {Server} = require('socket.io')
 const PORT = process.env.PORT || 3005; 
+const {Server} = require('socket.io')
 
 const corsOptions = {
     origin: 'http://localhost:3000',
-    credentials: true, // This is important.
+    credentials: true, 
+    methods: ["GET", "POST"]
 }
 
 const httpServer = http.createServer(app)
@@ -36,6 +37,15 @@ httpServer.listen(PORT, () => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
   });
+
+
+  io.on("connection", (socket) => {
+    console.log(`User Connected: ${socket.id}`)
+    socket.on('emitcourse', (data) => {
+        console.log('data:',data)
+        // socket.broadcast.emit('courseData', data)
+    })
+})
 
 app.use(cors(corsOptions))
 app.use(cors('*'))

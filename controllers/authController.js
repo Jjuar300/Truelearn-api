@@ -58,7 +58,7 @@ const UserSignUp = async (req, res) => {
 const UserSignIn = async (req, res) => {
 try{
 const {email, password} = req.body; 
-const user = await User.findOne({email})
+const user = await User.findOne({email: email})
 if(!user){
     return res.json({
         error: 'No user found!'
@@ -88,6 +88,7 @@ console.log(err)
 
 const getAuthorize = (req, res) => {
     const {token} = req.cookies; 
+    console.log(token)
     if(token){
    jwt.verify(token, process.env.JWT_SECRET,{}, (err, user) => {
             if(err) throw err; 
