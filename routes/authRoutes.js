@@ -25,7 +25,7 @@ const {getUser} = require('../controllers/user')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://truelearn.onrender.com',
     credentials: true, // This is important.
   }
 
