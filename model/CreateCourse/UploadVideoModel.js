@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const introductionInputSchema = new mongoose.Schema({
 
     introduction: {
-        type: String, 
+        type: Array, 
         min:5, 
         max: 50, 
     }, 

@@ -1,99 +1,64 @@
 
-const dotenv = require('dotenv')
-const mongoose = require('mongoose')
-const express = require('express')
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const express = require('express');
 dotenv.config(); 
-const authroutes = require('./routes/authRoutes')
+const authroutes = require('./routes/authRoutes');
 const app = express(); 
-const cookieParser = require('cookie-parser')
-const {upload} = require('./middleware/Multer')
-const stripe = require('./routes/stripe')
-const { uploadToAwsS3} = require('./services/s3')
-const SectionInput = require('./model/CreateCourse/AddSection')
-const UploadVideo = require('./model/CreateCourse/UploadVideoModel')
-const User = require('./model/SignUpSchema')
-const cors = require('cors')
-const morgan = require('morgan')
-const http = require('http')
+const cookieParser = require('cookie-parser');
+const {upload} = require('./middleware/Multer');
+const stripe = require('./routes/stripe');
+const { uploadToAwsS3} = require('./services/s3');
+const SectionInput = require('./model/CreateCourse/AddSection');
+const UploadVideo = require('./model/CreateCourse/UploadVideoModel');
+const User = require('./model/SignUpSchema');
+const cors = require('cors');
+const morgan = require('morgan');
+const http = require('http');
 const PORT = process.env.PORT || 3005; 
-const {Server} = require('socket.io')
+const {Server} = require('socket.io');
+const ImageKit = require('imagekit');
+const UserCourseInfo = require('./model/CreateCourse/UserCourseInfo')
+
+const imageKit = new ImageKit({
+    urlEndpoint: 'https://ik.imagekit.io/4pwok1cjp/', 
+    publicKey: 'public_GjEtjvvBdROHsJ46QIVXwiNKWGo=', 
+    privateKey: 'private_UeH6n0ZN5vg2m0bVlSaGGLnRyec=', 
+})
 
 const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true, 
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }
 
 const httpServer = http.createServer(app)
-const io = new Server(httpServer, corsOptions)
 
 httpServer.listen(PORT, () => {
     console.log('SERVER RUNNING IN PORT', PORT)
 })
 
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://truelearn.onrender.com', 'https://d3n6kitjvdjlm1.cloudfront.net/',  "http://localhost:3000",);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", 
+      "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
-
-  io.on("connection", (socket) => {
-    console.log(`User Connected: ${socket.id}`)
-    socket.on('emitcourse', (data) => {
-        console.log('data:',data)
-        // socket.broadcast.emit('courseData', data)
-    })
-})
 
 app.use(cors(corsOptions))
 app.use(cors('*'))
 app.use(express.json())
 app.use(cookieParser()); 
 app.use(express.urlencoded({extended: false}));
-app.use(express.json({limit: '60mb'}))
 app.use(express.urlencoded({extended: true, limit: '60mb'}))
 app.use(morgan('common'))
 
 app.use('/', authroutes)
 app.use('/stripe', stripe)
 
-app.post('/upload', async (req, res) => {
-    try{
-        const {introduction} = req.body; 
-    UploadVideo.create({
-        introduction: introduction, 
-        videofilename: req.file.originalname
-    })
-    uploadToAwsS3(req.file)
-    }catch(error){
-        console.log(error)
-    }
-});
-
-// app.post('/uploadsectiondata', async (req, res) => {
-//    try{
-//     console.log('fileName:',req.file.originalname)
-//     console.log('file: ', req.file)
-//     const {inputValue} = req.body;
-//     SectionInput.create({
-//        section:inputValue, 
-//        sectionVideoFile: req.file.originalname, 
-//      })
-//    }catch(error){
-//     console.log(error)
-//    }
-// });
-
-
-app.put('/userfile',upload.single('file'),  async (req, res) => {
-    const {userId} = req.body; 
-  await  User.findByIdAndUpdate(userId, {
-        picturepath: req.file.originalname
-    })
-    console.log('userfile:', req.file.originalname)
-    console.log('userId:', userId)
+app.get('/auth', (req, res) => {
+    const result = imageKit.getAuthenticationParameters();
+    res.send(result)
 })
 
  mongoose.connect(process.env.MONGO_DATABASE, {
